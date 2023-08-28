@@ -9,12 +9,12 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::latest()->get();
+        return Post::with('user')->latest()->get();
     }
 
     public function show(Post $post)
     {
-        return $post;
+        return $post->load('user');
     }
 
     public function store()
