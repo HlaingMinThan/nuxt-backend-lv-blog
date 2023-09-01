@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function userPosts()
+    {
+        return auth()->user()->posts;
+    }
+
     public function index()
     {
         return Post::with('user')->latest()->get();
@@ -24,7 +29,7 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        $cleanData['user_id'] = 1; // need to update
+        $cleanData['user_id'] = auth()->id(); // need to update
 
         $post = Post::create($cleanData);
 
