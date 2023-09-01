@@ -17,6 +17,11 @@ class PostController extends Controller
         return Post::with('user')->latest()->get();
     }
 
+    public function authPosts(Post $post)
+    {
+        $this->authorize('view', $post);
+        return $post->load('user');
+    }
     public function show(Post $post)
     {
         return $post->load('user');
@@ -38,6 +43,7 @@ class PostController extends Controller
 
     public function update(Post $post)
     {
+        $this->authorize('update', $post);
         $cleanData = request()->validate([
             'title' => 'required',
             'body' => 'required',
@@ -50,6 +56,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
 
         return $post;
