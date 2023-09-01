@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Laravel\Prompts\error;
+
 class RedirectIfAuthenticated
 {
     /**
@@ -21,7 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return response()->json(['errors' => [
+                    'email' => ['You are already logged in.']
+                ]], 422); // 400 Bad Request
             }
         }
 
