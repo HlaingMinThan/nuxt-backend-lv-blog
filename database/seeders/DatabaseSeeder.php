@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         Post::factory(30)->create();
 
         User::find(1)->update([
+            'email' => 'hmt@gmail.com',
             'name' => "Hlaing Min Than",
             'password' => '12345678'
         ]);
