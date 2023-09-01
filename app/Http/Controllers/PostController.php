@@ -35,4 +35,23 @@ class PostController extends Controller
 
         return $post;
     }
+
+    public function update(Post $post)
+    {
+        $cleanData = request()->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post = $post->update($cleanData);
+
+        return $post;
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return $post;
+    }
 }
